@@ -124,14 +124,63 @@ li {
 	border: 0px;
 }
 
-@media screen and (min-width: 420px) and (min-width: 940px){
+@media screen and (min-width: 420px) and (max-width: 940px){
+  .renew{
+    display: none;
+  }
+
+  .add-city{
+    display: grid;
+    grid-template-columns: 90% 10%;
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .btn-renew{
+    background: none;
+    border: none;
+  }
+
+  .weatherHere{
+    margin: 2%;
+    display: grid;
+    grid-template-columns: 70% 30% 1fr;
+  }
+
+  .weatherMain{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .mainTemp{
+    font-size: 3.2em;
+    margin: 0;
+    margin-top: auto;
+    color: #6A7681;
+  }
+
+  .fa-sun-o{
+    margin: 0;
+  }
+
+  .input-city{
+    font-size: 1em;
+  }
+}
+
+@media screen and (min-width: 940px){
   .btn-renew{
     display: none;
   }
 
   .fav{
     display: grid;
-    grid-template-columns: 2fr 1fr 5%;
+    grid-template-columns: 50% 45%;
+  }
+
+  .add-city{
+    display: grid;
+    grid-template-columns: 90% 10%;
   }
 
   .mainInfo{
@@ -155,6 +204,8 @@ li {
   .fa-sun-o{
     margin: 0;
   }
+
+
 }
 
 
@@ -164,12 +215,25 @@ li {
     grid-template-columns: 1fr;
   }
 
+  .add-city{
+    display: grid;
+    grid-template-columns: 90% 10%;
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .weatherHere{
+    margin: 2%;
+    display: grid;
+    grid-template-columns: 70% 30% 1fr;
+  }
+
   .renew{
     display: none;
   }
 
   .input-city{
-    width: 60%;
+    width: 80%;
     font-size: 1em;
   }
 
