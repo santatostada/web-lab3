@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+* {
+  font-family: 'Rubik', sans-serif;
+}
+
+
+.weatherHere{
+  margin: 2%;
+  display: grid;
+  grid-template-columns: 1fr 25% 1fr;
+}
+
+.title{
+  color: #799BAF;
+  font-size: 2.2em;
+  margin: 0;
+}
+
+.main{
+  margin: 2%;
+}
+
+.mainCity{
+  margin: 0 0;
+	margin-bottom: 8%;
+  font-size: 2.4em;
+	font-weight: bold;
+}
+
+.btn{
+  background: none;
+  border: none;
+}
+
+.info li{
+  margin-bottom: 1%;
+}
+
+.renew {
+  background-color: #ACC1CE;
+  color: #5A7789;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.2em;
+}
+
+.cities{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1%;
+}
+
+.cityWeather{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+
+.option{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #A6B0B6;
+  color: white;
+  font-size: 0.8em;
+}
+
+.fa-plus-circle{
+  border: none;
+}
+
+option p{
+   text-align: right;
+}
+
+i{
+  margin: auto;
+  color: #6E8090;
+}
+
+.temp{
+  margin: auto;
+}
+
+h3{
+  font-size: 1.4em;
+  color: #6E8090;
+}
+
+h2, .temp{
+  font-size: 2em;
+  color: #6E8090;
+  margin: 0;
+}
+
+h4{
+  margin-left: 3%;
+}
+
+
+.temp{
+  color: #6A7681;
+  text-align: right;
+  margin: auto;
+}
+
+.option p{
+  text-align: right;
+  margin-right: 3%;
+}
+
+li {
+    list-style-type: none;
+   }
+ ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.input-city{
+  margin: 0 0;
+	margin-right: 10px;
+	background-color: #f1f1f1;
+  font-size: 1.1vw;
+	border: 0px;
+}
+
+@media screen and (min-width: 420px) and (min-width: 940px){
+  .btn-renew{
+    display: none;
+  }
+
+  .fav{
+    display: grid;
+    grid-template-columns: 2fr 1fr 5%;
+  }
+
+  .mainInfo{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1%;
+  }
+
+  .weatherMain{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .mainTemp{
+    font-size: 3.2em;
+    margin: 0;
+    margin-top: auto;
+    color: #6A7681;
+  }
+
+  .fa-sun-o{
+    margin: 0;
+  }
+}
+
+
+@media screen and (max-width: 420px) {
+  .cities{
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .renew{
+    display: none;
+  }
+
+  .input-city{
+    width: 60%;
+    font-size: 1em;
+  }
+
+  .btn-renew{
+    background: none;
+    border: none;
+  }
+
+  .weatherMain{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+  }
+
+  .mainTemp{
+    font-size: 3.2em;
+    margin: 0;
+    margin-top: auto;
+    color: #6A7681;
+  }
+  .fa-sun-o{
+    margin: 0;
+  }
+}
