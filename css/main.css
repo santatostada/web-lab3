@@ -124,7 +124,7 @@ li {
 	border: 0px;
 }
 
-@media screen and (min-width: 420px) and (max-width: 940px){
+@media screen and (min-width: 530px) and (max-width: 940px){
   .renew{
     display: none;
   }
@@ -209,7 +209,7 @@ li {
 }
 
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 530px) {
   .cities{
     display: grid;
     grid-template-columns: 1fr;
