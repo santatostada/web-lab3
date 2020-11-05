@@ -5,27 +5,20 @@
 }
 
 
-.weatherHere{
-  margin: 2%;
-  display: grid;
-  grid-template-columns: 1fr 25% 1fr;
-}
-
-.title{
-  color: #799BAF;
+.weather-top-name {
+  color: #77868a;
   font-size: 2.2em;
   margin: 0;
 }
 
-.main{
+.main {
   margin: 2%;
 }
 
-.mainCity{
-  margin: 0 0;
-	margin-bottom: 8%;
+.main-city {
+  margin: 0 0 8%;
   font-size: 2.4em;
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .add-btn {
@@ -63,13 +56,13 @@
   cursor: pointer;
 }
 
-.info li{
+.info li {
   margin-bottom: 1%;
 }
 
 .update-btn, .update-btn-img {
-  background-color: #ACC1CE;
-  color: #5A7789;
+  background-color: #cad3d8;
+  color: #728288;
   border-radius: 5px;
   border: none;
   font-size: 1.2em;
@@ -90,29 +83,29 @@
   margin-top: auto;
 }
 
-.cities {
+.favorite-cities {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 1%;
   grid-column-gap: 5%;
 }
 
-.weather-icon {
+.favorite-weather-img {
   max-width: 40px;
   height: auto;
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.cityWeather{
+.favorite-weather {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
 }
 
-.option{
+.option {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  background-color: #A6B0B6;
+  background-color: #a8b1b3;
   color: white;
   font-size: 0.8em;
 }
@@ -124,15 +117,15 @@
   color: #7e7e7e;
 }
 
-.current-city-name {
+.main-city-name {
   font-size: 1.4em;
-  color: #6E8090;
+  color: #6f838b;
   margin-bottom: 3%;
 }
 
 h2 {
   font-size: 2em;
-  color: #6E8090;
+  color: #77868a;
   margin: 0;
 }
 
@@ -244,7 +237,7 @@ ul {
     font-size: 1em;
   }
 
-  .current-weather {
+  .main-weather {
     display: grid;
     grid-template-columns: 1fr 1fr;
 
@@ -295,7 +288,7 @@ ul {
     grid-template-columns: 70% 30%;
   }
 
-  .current-weather {
+  .main-weather {
     display: grid;
     grid-template-columns: 1fr 2fr;
   }
@@ -326,7 +319,7 @@ ul {
     display: none;
   }
 
-  .weatherHere {
+  .weather-top {
     margin: 2%;
     display: grid;
     grid-template-columns: 1fr 25% 1fr;
@@ -339,22 +332,21 @@ ul {
     margin-left: auto;
   }
 
-  .mainInfo{
+  .main-city-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1%;
   }
 
-  .weatherMain{
+  .main-weather {
     display: grid;
     grid-template-columns: 1fr 2fr;
   }
 
-  .mainTemp{
+  .current-degrees {
     font-size: 3.2em;
-    margin: 0;
-    margin-top: auto;
-    color: #6A7681;
+    margin: auto 0 0;
+    color: #7e7e7e;
   }
 
   .current-weather-img {

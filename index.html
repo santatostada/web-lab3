@@ -10,31 +10,31 @@
 </head>
 
 <body>
-<header class="weatherHere">
-    <h1 class="title">Погода здесь</h1>
+<header class="weather-top">
+    <h1 class="weather-top-name">Погода здесь</h1>
     <form method="get" name="updateLocation">
         <button class="update-btn" type="button" name="updateLocation">Обновить геолокацию</button>
         <button class="update-btn-img" type="button" name="updateLocation">
-            <i class="btn-renew fa fa-refresh fa-3x" aria-hidden="true"></i>
+            <img src="images/location-update.png" class="update-img" alt="update"/>
         </button>
     </form>
 </header>
 
 <main class="main">
-    <section class="mainInfo"></section>
+    <section class="main-city-info"></section>
 
     <section class="favorite">
-        <div class="fav">
+        <div class="favorite-top">
             <h2>Избранное</h2>
             <div>
                 <form method="get" name="addNewCity" class="add-new-city">
-                    <input name="newCityName" class="newCity" type="text" placeholder="Добавить новый город">
+                    <input name="newCityName" class="new-city" type="text" placeholder="Добавить новый город">
                     <input type="submit" value="+" class="add-btn">
                 </form>
             </div>
         </div>
 
-        <ul class="cities"></ul>
+        <ul class="favorite-cities"></ul>
     </section>
 </main>
 
@@ -49,14 +49,14 @@
 </template>
 
 <template id="tempCurrentCity">
-    <div class="current-city">
-        <h2 class="current-city-name"></h2>
-        <div class="current-weather">
+    <div class="main-city">
+        <h2 class="main-city-name"></h2>
+        <div class="main-weather">
             <img src="" class="current-weather-img" alt="weather"/>
             <p class="current-degrees"></p>
         </div>
     </div>
-    <ul class="cityWeather">
+    <ul class="info">
         <li class="option">
             <span>Ветер</span>
             <p></p>
@@ -85,11 +85,11 @@
         <div class="favorite-weather">
             <h3 class="favorite-city-name"></h3>
             <p class="degrees"></p>
-            <i class="weather-icon" aria-hidden="true"></i>
+            <img src="" class="favorite-weather-img" alt="weather small"/>
             <button onclick="" type="button" name="button" class="delete-btn">+</button>
         </div>
 
-        <ul class="cityWeather">
+        <ul class="info">
             <li class="option">
                 <span>Ветер</span>
                 <p></p>
