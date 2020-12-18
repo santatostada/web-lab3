@@ -72,7 +72,7 @@ function fillCurrentCityInfo(endpoint, params) {
 		const template = document.querySelector('#tempCurrentCity');
 		const imp = document.importNode(template.content, true)
 		imp.querySelector('.main-city-name').innerHTML = jsonResult.name;
-		imp.querySelector('.current-weather-img').src = `images/weather/${getWeatherIcon(jsonResult)}.png`;
+		imp.querySelector('.current-weather-img').src = getWeatherIcon(jsonResult);
 		imp.querySelector('.current-degrees').innerHTML = `${Math.floor(jsonResult.main.temp)}&deg;C`;
 		fillWeatherInfo(jsonResult, imp);
 		document.getElementsByClassName('main-city-info')[0].innerHTML = '';
@@ -164,7 +164,7 @@ function addCity(jsonResult, newCity) {
 	const imp = document.importNode(template.content, true)
 	imp.querySelector('.favorite-city-name').innerHTML = cityName;
 	imp.querySelector('.degrees').innerHTML = `${Math.floor(jsonResult.main.temp)}&deg;C`;
-	imp.querySelector('.favorite-weather-img').src = `images/weather/${getWeatherIcon(jsonResult)}.png`;
+	imp.querySelector('.favorite-weather-img').src = getWeatherIcon(jsonResult);
 	imp.querySelector('.delete-btn')
 		.addEventListener('click', () => deleteCity(cityName));
 	fillWeatherInfo(jsonResult, imp);
@@ -194,16 +194,18 @@ function getWeatherIcon(jsonResult) {
 	let clouds = isCloudy(jsonResult.clouds.all);
 	let wind = isWindy(jsonResult.wind.speed);
 	let precipitation = isPrecipitation(jsonResult);
+	let weather = '';
 
 	if (clouds === 'yes' && precipitation === 'no' && wind === 'no') {
-		return 'cloud';
+		weather = 'cloud';
 	} else if (precipitation === 'no' && wind !== 'no') {
-		return 'wind';
+		weather = 'wind';
 	} else if (precipitation === 'snow') {
-		return 'snow';
+		weather = 'snow';
 	} else if (precipitation === 'rain') {
-		return 'rain'
-	} else return 'sun'
+		weather = 'rain';
+	} else weather = 'sun';
+	return 'images/weather/' + weather + '.png';
 }
 
 function isCloudy(clouds) {
