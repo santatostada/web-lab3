@@ -12,7 +12,7 @@ addNewCityForm.addEventListener('submit', (event) => {
 })
 
 function request(endpoint, params) {
-	const url = 'http://localhost:9090/weather/';
+	const url = 'http://localhost:9090/';
 	const request = url + endpoint + "?" + params;
 	const abortController = new AbortController();
 	const abortSignal = abortController.signal;
@@ -20,15 +20,13 @@ function request(endpoint, params) {
 		if (response.ok) {
 			return response.json();
 		} else {
-			alert('Cannot find this place');
+			alert('No place was found');
 		}
-	}).catch(() => {
-		alert('Connection was lost');
-	});
+	})
 }
 
 function addSavedCities() {
-	const url = "http://localhost:9090/favourites/";
+	const url = "http://localhost:9090/cities/";
 	fetch(url).then ((response) => {
 		if (response.ok) {
 			return response.json();
@@ -37,8 +35,8 @@ function addSavedCities() {
 		console.log(response);
 		for (let i = 0; i < response.cities.length; i++) {
 			const newCity = newCityLoaderInfo();
-			let key = response.cities[i];
-			request('city', ['q=' + key]).then((jsonResult) => {
+			let city = response.cities[i];
+			request('city', ['q=' + city]).then((jsonResult) => {
 				addCity(jsonResult, newCity);
 			});
 		}
@@ -93,80 +91,35 @@ function fillWeatherInfo(jsonResult, imp) {
 
 
 function getTypeOfWind(wind) {
-	if (wind >= 0 && wind < 6) {
-		return 'Light breeze';
-	} else if (wind >= 6 && wind < 15) {
-		return 'Moderate breeze';
-	} else if (wind >= 15 && wind < 25) {
-		return 'Windy';
-	} else if (wind >= 25 && wind < 33) {
-		return 'Very windy';
-	} else if (wind >= 33) {
-		return 'Strong wind';
-	}
+	if (wind >= 0 && wind < 15) {
+		return 'Breeze';
+	} else if (wind < 25) {
+		return 'Wind';
+	} else { return 'Strong wind';}
 }
 
-function getWindDirection(deg) {
-	if (deg > 11.25 && deg <= 33.75) {
-		return 'North-Northeast'
-	}
-	if (deg > 33.75 && deg <= 56.25) {
-		return 'Northeast'
-	}
-	if (deg > 56.25 && deg <= 78.75) {
-		return 'East-Northeast'
-	}
-	if (deg > 78.75 && deg <= 101.25) {
+function getWindDirection(degrees) {
+	if (degrees <= 57) {
+		return 'NorthEast'
+	} else if (degrees <= 100 ) {
 		return 'East'
-	}
-	if (deg > 101.25 && deg <= 123.75) {
-		return 'East-Southeast'
-	}
-	if (deg > 123.75 && deg <= 146.25) {
-		return 'Southeast'
-	}
-	if (deg > 146.25 && deg <= 168.75) {
-		return 'South-Southeast'
-	}
-	if (deg > 168.75 && deg <= 191.25) {
+	} else if (degrees <= 140) {
+		return 'SouthEast'
+	} else if (degrees <= 200) {
 		return 'South'
-	}
-	if (deg > 191.25 && deg <= 213.75) {
-		return 'South-Southwest'
-	}
-	if (deg > 213.75 && deg <= 236.25) {
-		return 'Southwest'
-	}
-	if (deg > 236.25 && deg <= 258.75) {
-		return 'West-Southwest'
-	}
-	if (deg > 258.75 && deg <= 281.25) {
+	} else if (degrees <= 220) {
+		return 'SouthWest'
+	} else if (degrees <= 280) {
 		return 'West'
-	}
-	if (deg > 281.25 && deg <= 303.75) {
-		return 'West-Northwest'
-	}
-	if (deg > 303.75 && deg <= 326.25) {
-		return 'Northwest'
-	}
-	if (deg > 326.25 && deg <= 346.75) {
-		return 'North-Northwest'
-	}
-	return 'North'
+	} else if (degrees <= 320) {
+		return 'NorthWest'
+	} else return 'North'
 }
 
 function getTypeOfCloudy(percent) {
 	if (percent < 12.5) {
 		return 'Clear';
-	} else if (percent >= 12.5 && percent < 37.5) {
-		return 'Mostly clear';
-	} else if (percent >= 37.5 && percent < 62.5) {
-		return 'Partly cloudy';
-	} else if (percent >= 62.5 && percent < 87.5) {
-		return 'Mostly cloudy';
-	} else if (percent >= 87.5) {
-		return 'Cloudy';
-	}
+	} else return 'Cloudy';
 }
 
 function addNewCity() {
@@ -175,7 +128,7 @@ function addNewCity() {
 	addNewCityForm.reset();
 	const newCity = newCityLoaderInfo();
 	request('city', ['q=' + cityName]).then((jsonResult) => {
-		const url = "http://localhost:9090/favourites/";
+		const url = "http://localhost:9090/cities/";
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -220,7 +173,7 @@ function addCity(jsonResult, newCity) {
 }
 
 function deleteCity(cityName) {
-	fetch("http://localhost:9090/favourites", {
+	fetch("http://localhost:9090/cities", {
 		method: 'DELETE',
 		headers: {
 			"Content-Type": "application/json"
@@ -238,80 +191,34 @@ function deleteCity(cityName) {
 }
 
 function getWeatherIcon(jsonResult) {
-	let clouds = haveClouds(jsonResult.clouds.all);
-	let wind = haveWind(jsonResult.wind.speed);
-	let precipitation = havePrecipitation(jsonResult);
-	let timeOfDay = getTimeOfDay(jsonResult);
+	let clouds = isCloudy(jsonResult.clouds.all);
+	let wind = isWindy(jsonResult.wind.speed);
+	let precipitation = isPrecipitation(jsonResult);
 
-	if (clouds === 'cloudy' && precipitation === 'no' && wind === 'no') {
+	if (clouds === 'yes' && precipitation === 'no' && wind === 'no') {
 		return 'cloud';
-	} else if (clouds === 'variable' && precipitation === 'no' && wind === 'no' && timeOfDay === 'day') {
-		return 'variable-cloudy-day';
-	} else if (clouds === 'variable' && precipitation === 'no' && wind === 'no' && timeOfDay === 'night') {
-		return 'variable-cloudy-night';
-	} else if (clouds === 'cloudy' && precipitation === 'no' && wind !== 'no') {
+	} else if (precipitation === 'no' && wind !== 'no') {
 		return 'wind';
-	} else if (clouds === 'variable' && precipitation === 'no' && wind !== 'no' && timeOfDay === 'day') {
-		return 'wind-day';
-	} else if (clouds === 'variable' && precipitation === 'no' && wind !== 'no' && timeOfDay === 'night') {
-		return 'wind-night';
-	} else if (clouds === 'cloudy' && (precipitation === 'rain' || precipitation === 'downpour') && wind === 'tempest') {
-		return 'tempest';
-	} else if (clouds === 'cloudy' && (precipitation === 'rain' || precipitation === 'downpour') && wind === 'tempest' && timeOfDay === 'day') {
-		return 'tempest-day';
-	} else if (clouds === 'cloudy' && (precipitation === 'rain' || precipitation === 'downpour') && wind === 'tempest' && timeOfDay === 'night') {
-		return 'tempest-night';
-	} else if (clouds === 'cloudy' && precipitation === 'mistyrain') {
-		return 'mistyrain';
-	} else if (clouds === 'variable' && precipitation === 'mistyrain' && timeOfDay === 'day') {
-		return 'mistyrain-day';
-	} else if (clouds === 'variable' && precipitation === 'mistyrain' && timeOfDay === 'night') {
-		return 'mistyrain-night';
-	} else if (clouds === 'cloudy' && precipitation === 'rain') {
-		return 'rain';
-	} else if (clouds === 'variable' && precipitation === 'rain' && timeOfDay === 'day') {
-		return 'rain-day';
-	} else if (clouds === 'variable' && precipitation === 'rain' && timeOfDay === 'night') {
-		return 'rain-night';
-	} else if (clouds === 'cloudy' && precipitation === 'downpour') {
-		return 'downpour';
-	} else if (clouds === 'variable' && precipitation === 'downpour' && timeOfDay === 'day') {
-		return 'downpour-day';
-	} else if (clouds === 'variable' && precipitation === 'downpour' && timeOfDay === 'night') {
-		return 'downpour-night';
-	} else if (clouds === 'cloudy' && precipitation === 'snow') {
+	} else if (precipitation === 'snow') {
 		return 'snow';
-	} else if (clouds === 'variable' && precipitation === 'snow' && timeOfDay === 'day') {
-		return 'snow-day';
-	} else if (clouds === 'variable' && precipitation === 'snow' && timeOfDay === 'night') {
-		return 'snow-night';
-	}
-
-	if (timeOfDay === 'night') {
-		return 'moon';
-	}
-	return 'sun';
+	} else if (precipitation === 'rain') {
+		return 'rain'
+	} else return 'sun'
 }
 
-function haveClouds(clouds) {
+function isCloudy(clouds) {
 	if (clouds <= 30) {
 		return 'no';
-	} else if (clouds <= 70) {
-		return 'variable';
-	}
-	return 'cloudy';
+	} else return 'yes';
 }
 
-function haveWind(wind) {
+function isWindy(wind) {
 	if (wind < 14) {
 		return 'no';
-	} else if (wind < 33) {
-		return 'windy';
-	}
-	return 'tempest';
+	} else return 'yes';
 }
 
-function havePrecipitation(jsonResult) {
+function isPrecipitation(jsonResult) {
 	let rain = 0;
 	let snow = 0;
 	if (jsonResult.hasOwnProperty('rain') && jsonResult.rain.hasOwnProperty('1h')) {
@@ -321,27 +228,11 @@ function havePrecipitation(jsonResult) {
 		snow = jsonResult.snow['1h'];
 	}
 	if (snow > rain) {
-		if (snow > 0.1) {
 			return 'snow';
-		}
-	} else if (rain >= snow) {
-		if (rain !== 0) {
-			return 'rain';
-		}
+	} else if (rain >= snow && rain !== 0) {
+		return 'rain';
 	}
 	return 'no';
-}
-
-function getTimeOfDay(jsonResult) {
-	let now = new Date();
-	now.setSeconds(0);
-	now.setMinutes(0);
-	now.setHours(0);
-	now.setSeconds(now.getSeconds() + jsonResult.dt + jsonResult.timezone);
-	if (now.getHours() > 21 || now.getHours() < 6) { // Todo: check timings sunrise and sunset
-		return 'night';
-	}
-	return 'day';
 }
 
 getLocation();

@@ -13,8 +13,6 @@ const pg = require('pg');
 
 const config = {
     host: 'localhost',
-    //user: '',
-    //password: '',
     database: 'fav',
     port: 5432
 };
@@ -36,7 +34,7 @@ server.use((req, res, next) => {
     next();
 });
 
-server.get('/weather/city', (req, res) => {
+server.get('/city', (req, res) => {
     let city = req.query.q;
     city = encodeURI(city);
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=metric' + '&appid=' + api_key;
@@ -51,7 +49,7 @@ server.get('/weather/city', (req, res) => {
     })
 })
 
-server.get('/weather/coordinates', (req, res) => {
+server.get('/coordinates', (req, res) => {
     let lat = req.query.lat;
     let lon = req.query.lon;
     fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric' + '&appid=' + api_key)
@@ -63,7 +61,7 @@ server.get('/weather/coordinates', (req, res) => {
         })
 })
 
-server.get('/favourites', (req, res) => {
+server.get('/cities', (req, res) => {
 
     const query = 'SELECT * FROM cities';
 
@@ -82,7 +80,7 @@ server.get('/favourites', (req, res) => {
         });
 })
 
-server.post('/favourites', (req, res) => {
+server.post('/cities', (req, res) => {
     let city_name = req.body.name;
     let textType = typeof city_name;
 
@@ -104,7 +102,7 @@ server.options('*', (req, res) => {
     res.send('ok');
 });
 
-server.delete('/favourites', (req, res) => {
+server.delete('/cities', (req, res) => {
     let city_name = req.body.name;
     let query = 'DELETE FROM cities WHERE city=\'' + city_name + '\'';
 
@@ -120,5 +118,4 @@ server.delete('/favourites', (req, res) => {
 });
 
 server.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`)
 })
