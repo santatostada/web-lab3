@@ -21,6 +21,7 @@ function request(endpoint, params) {
 			return response.json();
 		} else {
 			alert('No place was found');
+			return;
 		}
 	})
 }
@@ -68,7 +69,7 @@ function currentCityInfoLoader() {
 }
 
 function fillCurrentCityInfo(endpoint, params) {
-	request(endpoint, params).then((jsonResult) => {
+	return request(endpoint, params).then((jsonResult) => {
 		const template = document.querySelector('#tempCurrentCity');
 		const imp = document.importNode(template.content, true)
 		imp.querySelector('.main-city-name').innerHTML = jsonResult.name;
@@ -127,7 +128,7 @@ function addNewCity() {
 	const cityName = formData.get('newCityName').toString();
 	addNewCityForm.reset();
 	const newCity = newCityLoaderInfo();
-	request('city', ['q=' + cityName]).then((jsonResult) => {
+	return request('city', ['q=' + cityName]).then((jsonResult) => {
 		const url = "http://localhost:9090/cities/";
 		fetch(url, {
 			method: 'POST',
@@ -145,6 +146,9 @@ function addNewCity() {
 				alert("City exists");
 			}
 		})
+	}).catch(err => {
+		newCity.remove();
+		alert('error')
 	});
 }
 
@@ -239,3 +243,14 @@ function isPrecipitation(jsonResult) {
 
 getLocation();
 addSavedCities();
+
+module.exports = {
+	request : request,
+	addSavedCities : addSavedCities,
+	getLocation : getLocation,
+	currentCityInfoLoader : currentCityInfoLoader,
+	fillCurrentCityInfo : fillCurrentCityInfo,
+	addNewCity : addNewCity,
+	newCityLoaderInfo : newCityLoaderInfo,
+	addCity : addCity
+}
