@@ -235,6 +235,17 @@ describe('test current city info', () => {
         }).catch(done);
     });
 
+    it('City by name', (done) => {
+        const cityName = 'Saint Petersburg'
+        const url = baseURL + '/weather/city?q=' + cityName;
+        fetchMock.once(url, spbResponse);
+        client.fillCurrentCityInfo('city', ['q=Saint Petersburg']).then((res) => {
+            const currentCity = document.getElementsByClassName('current-city-info')[0];
+            currentCity.innerHTML.should.be.eql(spbCurrent);
+            done();
+        }).catch(done);
+    });
+
     it('Server error alert test', (done) => {
         const cityName = 'Moscow';
         let url = baseURL + '/city?q=' + cityName;
